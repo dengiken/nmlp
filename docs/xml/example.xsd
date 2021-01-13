@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema
+    targetNamespace="http://dengiken.net/ns/schema"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+    <xs:element name="sequence">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="scene" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" />
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="scene">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="item" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element ref="shot" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" />
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="item">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:string" />
+            <xs:attribute name="file" type="xs:string" use="required" />
+            <xs:attribute name="fullscreen" type="xs:boolean" />
+            <xs:attribute name="anim" type="xs:string" />
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="shot">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="item" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element ref="part" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" />
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="part">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="caption" minOccurs="0" maxOccurs="unbounded" type="xs:string" />
+                <xs:element ref="select" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" />
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="select">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="option" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" />
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="option">
+        <xs:complexType mixed="true">
+            <xs:sequence>
+                <xs:element name="script" type="xs:string" />
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" />
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
