@@ -10,7 +10,7 @@ define("DOMAIN", $_SERVER["HTTP_HOST"]);
 define("HOME_URI", "/nmlp");
 
 define("HOME_DIR", dirname(__DIR__));
-define("HTDOCS_DIR", "");
+// define("HTDOCS_DIR", "");
 define("CLASS_DIR", HOME_DIR . "/classes");
 define("LIB_DIR", HOME_DIR . "/lib");
 define("EXEC_DIR", HOME_DIR . "/libexec");
@@ -40,13 +40,13 @@ session_set_cookie_params(
 
 spl_autoload_register(function ($class) {
     $class = preg_replace("/[_\\\\]/", "/", $class);
-    print CLASS_DIR . "/{$class}.php";
+    //if (DEBUG) {print CLASS_DIR . "/{$class}.php";}
     if (is_file(CLASS_DIR . "/{$class}.php")) {
         include_once(CLASS_DIR . "/{$class}.php");
     }
 });
 
-$SCRIPT_NAME = LIB_DIR . preg_replace("/" . preg_quote(HOME_URI, "/") . "/", "", $_SERVER["DOCUMENT_URI"]);
+$SCRIPT_NAME = LIB_DIR . preg_replace("/" . preg_quote(HOME_URI, "/") . "/", "", $_SERVER["SCRIPT_NAME"]);
 if (is_file($SCRIPT_NAME)) {
     include_once $SCRIPT_NAME;
 }

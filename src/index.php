@@ -1,4 +1,4 @@
-<?php include_once "nmlp-lib/etc/config.php"; ?>
+<?php namespace nmlp; include_once "nmlp-lib/etc/config.php"; ?>
 <!doctype html>
 <html lang="ja">
 <head>
@@ -6,9 +6,11 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <?php Common::loadCSS() ?>
     <title>Document</title>
 </head>
 <body>
 
+    <?php Common::loadJS() ?>
 </body>
 </html>
