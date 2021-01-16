@@ -7,7 +7,7 @@ define("DEBUG", 1);
 
 define("DOMAIN", "www.example.com");
 
-define("HOME_DIR", "/home/www.example.com");
+define("HOME_DIR", "/home/www.example.com/htdocs/nmlp-lib");
 define("HTDOCS_DIR", HOME_DIR . "/htdocs");
 define("LIB_DIR", HOME_DIR . "/lib");
 define("EXEC_DIR", HOME_DIR . "/libexec");
@@ -32,4 +32,12 @@ session_set_cookie_params([
     "httponly" => false,
     "samesite" => true
 ]);
+
+spl_autoload_register(function ($class) {
+    $class = preg_replace("/[_\\\\]/", "/", $class);
+    print $class;
+    if (is_file(CLASS_DIR . "/{$class}.php")) {
+        include_once(CLASS_DIR . "/{$class}.php");
+    }
+});
 
