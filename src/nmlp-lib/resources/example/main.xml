@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<sequence id="SEQ1">
+    <scene id="SCN1">
+        <item file="" fullscreen="true" />
+        <shot id="SHT1">
+            <item id="FG1" file="" anim="slide(x1, y1, x2, y2)" />
+            <item id="FG2" file=""  anim="slide(x1, y1, x2, y2)" />
+            <part id="PT1">
+                <caption>CAPTION 1</caption>
+                <caption>CAPTION 2</caption>
+                <select>
+                    <option>
+                        SELECT 1
+                        <script>
+                            <![CDATA[
+                                setEnv(a, 1);
+                                move("#SHT2");
+                            ]]>
+                        </script>
+                    </option>
+                    <option>
+                        SELECT 2
+                        <script>
+                            <![CDATA[
+                                setEnv(a, 2);
+                                move("#PT1");
+                            ]]>
+                        </script>
+                    </option>
+                </select>
+            </part>
+        </shot>
+    </scene>
+</sequence>

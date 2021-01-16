@@ -11,6 +11,7 @@
 </head>
 <body>
 
+    <script type="text/javascript" src="apps/jquery.min.js"></script>
     <?php Common::loadJS() ?>
 </body>
 </html>
