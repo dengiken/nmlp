@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <sequence id="SEQ1">
     <scene id="SCN1">
-        <item file="" fullscreen="true" />
+        <item file="images/bg1.jpg" fullscreen="true" />
+        <item file="images/bg2.png" />
         <shot id="SHT1">
-            <item id="FG1" file="" anim="slide(x1, y1, x2, y2)" />
-            <item id="FG2" file=""  anim="slide(x1, y1, x2, y2)" />
+            <item id="FG1" file="images/fg.png" anim="slide(x1, y1, x2, y2)" />
+            <item id="FG2" file="images/fg.png"  anim="slide(x1, y1, x2, y2)" />
             <part id="PT1">
                 <caption>CAPTION 1</caption>
                 <caption>CAPTION 2</caption>

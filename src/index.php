@@ -10,7 +10,13 @@
     <title>Document</title>
 </head>
 <body>
-
+    <div id="background" class="layer">bg</div>
+    <div id="foreground" class="layer">fg</div>
+    <div id="controls" class="layer">
+        <div id="caption">cap</div>
+        <div id="selection">sel</div>
+    </div>
+    <div id="overlay" class="layer">ov</div>
     <script type="text/javascript" src="apps/jquery.min.js"></script>
     <?php Common::loadJS() ?>
 </body>

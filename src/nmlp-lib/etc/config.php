@@ -51,3 +51,5 @@ if (is_file($SCRIPT_NAME)) {
     include_once $SCRIPT_NAME;
 }
 
+header("Content-type: text/html;charset=UTF8");
+
