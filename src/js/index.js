@@ -70,7 +70,7 @@ let nmlp = {
         }
     },
     setImage: (obj, layer) => {
-        let fileName = $(obj).attr("file")
+        let fileName = $(obj).attr("file");
         if (!fileName) {
             return false;
         }
@@ -78,7 +78,7 @@ let nmlp = {
         fileName = "nmlp-lib/resources/" + nmlp.book + "/" + fileName;
         if ($(obj).attr("fullscreen") == "true") {
             $("#" + layer).css({
-                background: "url(" + fileName + ")"
+                backgroundImage: "url(" + fileName + ")"
             });
         } else {
             $("#" + layer).append(

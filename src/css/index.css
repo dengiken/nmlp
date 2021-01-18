@@ -13,3 +13,39 @@ html, body {
      left: 0;
      top: 0;
  }
+
+ #background {
+     background-position: center;
+     background-size: cover;
+     bottom: 0;
+     right: 0;
+     left: 0;
+     top: 0;
+     position: fixed;
+ }
+
+ #caption {
+     width: 80%;
+     max-width: 1200px;
+     height: 150px;
+     position: absolute;
+     left: 50%;
+     top: 100%;
+     transform: translate(-50%, -200px);
+     border: 1px solid #ffffff;
+     background: #ffffff88;
+     display: none;
+ }
+
+ #selection {
+     width: 30%;
+     min-width: 300px;
+     height: 300px;
+     position: absolute;
+     left: 50%;
+     top: 50%;
+     transform: translate(-50%, -50%);
+     border: 1px solid #ffffff;
+     background: #ffffff88;
+     display: none;
+ }
