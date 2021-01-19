@@ -1,4 +1,11 @@
 <?php
+/**
+ * @file    api.php
+ * @brief   APIモデルファイル
+ * @author  Dengiken
+ * @date    2021-01-19
+ */
+
 if ($_POST["shot"] != "" && $_POST["scene"] != "" && $_POST["sequence"] != "" && $_POST["book"] != "") {
     print "<shot />";
 } elseif ($_POST["scene"] != "" && $_POST["sequence"] != "" && $_POST["book"] != "") {

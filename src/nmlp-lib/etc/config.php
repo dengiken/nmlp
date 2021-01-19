@@ -4,6 +4,7 @@
  * @brief   設定およびコントローラファイル
  * @author  Dengiken
  * @date    2021-01-19
+ * @package nmlp
  */
 
 namespace nmlp;
