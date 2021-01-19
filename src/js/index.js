@@ -3,6 +3,8 @@ let nmlp = {
     scene: "",
     sequence: "",
     shot: "",
+    partData: {},
+    cursor: 0,
     init: function() {
         _get = location.search.substring(1).split("&").map(
             (p) => p.split("=")
@@ -41,6 +43,8 @@ let nmlp = {
             //console.log(result);
             this.setScene(data, 1);
             this.setShot(data, 1, 1);
+            this.getPart(data, 1, 1, 1);
+            this.showCaption();
         })
     },
     xpath: function(xml, xpath) {
@@ -69,6 +73,9 @@ let nmlp = {
             nmlp.setImage(fg[i], "foreground");
         }
     },
+    getPart: (data, sceneIndex, shotIndex, partIndex) => {
+        nmlp.partData = nmlp.xpath(data, "/sequence/scene[" + sceneIndex + "]/shot[" + shotIndex + "]/part[" + partIndex + "]")[0];
+    },
     setImage: (obj, layer) => {
         let fileName = $(obj).attr("file");
         if (!fileName) {
@@ -85,6 +92,10 @@ let nmlp = {
                 "<img src=\"" + fileName + "\">"
             );
         }
+    },
+    showCaption: function() {
+        let row = this.xpath(this.partData, "/*");
+        console.log(this.partData);
     }
 };
 
