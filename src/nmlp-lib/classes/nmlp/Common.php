@@ -32,7 +32,7 @@ class Common
     }
 
     /**
-     * @fn      loadCSS
+     * @fn      loadJS
      * @brief   Javascriptのオートローディング
      * @access  public
      * @param   void

@@ -7,8 +7,8 @@
             <item id="FG1" file="images/fg.png" anim="slide(x1, y1, x2, y2)" />
             <item id="FG2" file="images/fg.png"  anim="slide(x1, y1, x2, y2)" />
             <part id="PT1">
-                <caption name="???">CAPTION 1</caption>
-                <caption name="???">CAPTION 2</caption>
+                <caption name="???">CAPTION &lt; abcdefghijklmnopqrstuvwxyz</caption>
+                <caption name="???">CAPTION &lt; 2</caption>
                 <select>
                     <option>
                         SELECT 1

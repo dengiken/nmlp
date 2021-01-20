@@ -1,8 +1,18 @@
+@font-face {
+    font-family: "light";
+    src: url("../apps/rounded-mplus-2c-light.woff") format("woff");
+}
+@font-face {
+    font-family: "regular";
+    src: url("../apps/rounded-mplus-2c-regular.woff") format("woff");
+}
+
 html, body {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
+    font-family: "regular",sans-serif;
 }
  .layer {
      margin: 0;
@@ -35,7 +45,13 @@ html, body {
      border: 1px solid #ffffff;
      background: #ffffff88;
      display: none;
+     font-size: 5vw;
  }
+ @media (min-width: 600px) {
+ #caption {
+     font-size: 30px;
+ }}
+
 
  #selection {
      width: 30%;

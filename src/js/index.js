@@ -94,9 +94,30 @@ let nmlp = {
         }
     },
     showCaption: function() {
-        let row = this.xpath(this.partData, "/*");
-        console.log(this.partData);
+        //let row = this.xpath(this.partData, "/*");
+        let $node = $(this.partData).children().eq(this.cursor);
+        switch ($node.prop("tagName")) {
+            case "caption":
+                $("#caption").css("display", "block");
+                $("#cap_name").html($node.attr("name"));
+                this.stepText($("#cap_body"), $node.text());
+                this.cursor++;
+                break;
+            default:
+        }
+    },
+    stepText: async function($obj, text) {
+        for (let i = 1; i <= text.length; i++) {
+            $obj.text(text.substr(0, i));
+            await sleep(25);
+        }
     }
+};
+
+const sleep = function sleep(msec) {
+    return new Promise(function (resolve) {
+        setTimeout(function () {resolve()}, msec);
+    })
 };
 
 nmlp.init();

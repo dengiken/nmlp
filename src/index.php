@@ -13,7 +13,10 @@
     <div id="background" class="layer">bg</div>
     <div id="foreground" class="layer">fg</div>
     <div id="controls" class="layer">
-        <div id="caption">cap</div>
+        <div id="caption">
+            <div id="cap_name"></div>
+            <div id="cap_body"></div>
+        </div>
         <div id="selection">sel</div>
     </div>
     <div id="overlay" class="layer">ov</div>
