@@ -7,7 +7,6 @@
  * @package nmlp
  */
 
-
 namespace nmlp;
 
 /**

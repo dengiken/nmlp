@@ -16,8 +16,9 @@
         <div id="caption">
             <div id="cap_name"></div>
             <div id="cap_body"></div>
+            <div id="cap_next">▶</div>
         </div>
-        <div id="selection">sel</div>
+        <div id="selection"></div>
     </div>
     <div id="overlay" class="layer">ov</div>
     <script type="text/javascript" src="apps/jquery.min.js"></script>
