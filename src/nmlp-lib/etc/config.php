@@ -123,5 +123,4 @@ if (is_file($SCRIPT_NAME)) {
  * HTTPヘッダ出力
  */
 header("Content-type: text/html;charset=UTF8");
-header("X-Frame-Options: ALLOW");
 
