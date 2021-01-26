@@ -2,12 +2,12 @@ const DEBUG = true;
 
 /**
  * @class Nmlp
- * @property book {string}
- * @property scene {string}
- * @property sceneData {node[]}
- * @property cursor {string}
- * @property xml {xml}
- * @property client {client}
+ * @property {string} book
+ * @property {string} scene
+ * @property {node[]} sceneData
+ * @property {string} cursor
+ * @property {xml} xml
+ * @property {client} client
  */
 class Nmlp {
     book = "";
@@ -18,6 +18,9 @@ class Nmlp {
     client = new Client();
     _get = "";
 
+    /**
+     * create a nmlp.
+     */
     constructor() {
         this._get = location.search.substring(1).split("&").map(
             (p) => p.split("=")
@@ -32,6 +35,11 @@ class Nmlp {
         this.startScene(this.book, this.scene);
     }
 
+    /**
+     * Start the scene.
+     * @param {string} book
+     * @param {string} scene
+     */
     startScene(book, scene) {
         $.ajax({
             type: "POST",
@@ -58,6 +66,9 @@ class Nmlp {
         })
     }
 
+    /**
+     * main
+     */
     main() {
         let $shot = $(this.sceneData[this.cursor]);
         let waiting = true;
@@ -100,6 +111,11 @@ class Nmlp {
         }
     }
 
+    /**
+     * Set the Background.
+     * @param {Node} $obj
+     * @returns {boolean}
+     */
     setBackground($obj) {
         let fileName = $obj.attr("file");
         if (fileName) {
@@ -119,6 +135,11 @@ class Nmlp {
         }
     }
 
+    /**
+     * Set the Image.
+     * @param {Node} $obj
+     * @returns {boolean}
+     */
     setImage($obj) {
         let x;
         let fileName = $obj.attr("file");
@@ -151,6 +172,10 @@ class Nmlp {
         }
     }
 
+    /**
+     * Set the Html.
+     * @param {Node} $obj
+     */
     setHtml($obj) {
         let fileName = $obj.attr("file");
         if (fileName) {
@@ -181,6 +206,10 @@ class Nmlp {
         }
     }
 
+    /**
+     * Set the Caption.
+     * @param {Node} $obj
+     */
     setCaption($obj) {
         $("#cap_next").css("display", "none");
         $("#caption").css("display", "block");
@@ -197,6 +226,10 @@ class Nmlp {
         }, 25);
     }
 
+    /**
+     * Set the Selection.
+     * @param {Node} $obj
+     */
     setSelect($obj) {
         $("#selection").children().remove();
         $obj.children("option").each(function() {
@@ -216,15 +249,26 @@ class Nmlp {
         $("#selection").css("display", "block");
     }
 
+    /**
+     * Run the Script.
+     * @param {Node} $obj
+     */
     runScript($obj) {
         let nml = nmlp.client;
         eval($obj.text());
     }
 
+    /**
+     * Clear (Foreground) Screen.
+     */
     clearScreen() {
         $("#foreground").children().remove();
     }
 
+    /**
+     * Fade the layer.
+     * @param $obj
+     */
     fade($obj) {
         $("#caption").css("display", "none");
         let counter = 0;
@@ -251,12 +295,30 @@ class Nmlp {
  */
 class Client {
     args = {};
+
+    /**
+     * Get the Variable.
+     * @param n
+     * @returns {*}
+     */
     getVar(n) {
         return this.args[n];
     }
+
+    /**
+     * Set the Variable.
+     * @param n
+     * @param v
+     */
     setVar(n, v) {
         this.args[n] = v;
     }
+
+    /**
+     * Move to Id.
+     * @param {string} id
+     * @returns {boolean}
+     */
     move(id) {
         for(let i in nmlp.sceneData) {
             if ($(nmlp.sceneData[i]).attr("id") == id) {
@@ -287,6 +349,9 @@ class Client {
         })
     }
 
+    /**
+     * Save by Automatic.
+     */
     autosave() {
         let tmp = JSON.parse(localStorage.nmlp);
         tmp[nmlp.book] = nmlp.scene;
@@ -294,6 +359,11 @@ class Client {
     }
 }
 
+/**
+ * Output the Debug string
+ * @param obj1
+ * @param obj2
+ */
 const debug = function(obj1, obj2) {
     if (DEBUG) {
         console.log(obj1);
@@ -301,6 +371,12 @@ const debug = function(obj1, obj2) {
     }
 };
 
+/**
+ * Evaluate by xpath
+ * @param {xml} xml
+ * @param {string} xpath
+ * @returns {Node[]}
+ */
 const xpath = function(xml, xpath) {
     let result = [];
     let values = xml.evaluate(
