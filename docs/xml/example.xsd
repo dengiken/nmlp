@@ -14,40 +14,41 @@
 
     <xs:element name="scene">
         <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="item" minOccurs="0" maxOccurs="unbounded" />
-                <xs:element ref="shot" maxOccurs="unbounded" />
-            </xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="background" />
+                <xs:element ref="caption" />
+                <xs:element ref="image" />
+                <xs:element ref="select" />
+                <xs:element name="clear" />
+                <xs:element ref="fade" />
+                <xs:element name="script" type="xs:string"/>
+                <xs:element ref="html" />
+            </xs:choice>
             <xs:attribute name="id" type="xs:string" />
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="item">
+    <xs:element name="background">
         <xs:complexType>
-            <xs:attribute name="id" type="xs:string" />
-            <xs:attribute name="file" type="xs:string" use="required" />
-            <xs:attribute name="fullscreen" type="xs:boolean" />
-            <xs:attribute name="anim" type="xs:string" />
+            <xs:attribute name="id" type="xs:normalizedString" />
+            <xs:attribute name="file" type="xs:anyURI" use="required" />
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="shot">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="item" minOccurs="0" maxOccurs="unbounded" />
-                <xs:element ref="part" maxOccurs="unbounded" />
-            </xs:sequence>
-            <xs:attribute name="id" type="xs:string" />
+    <xs:element name="caption">
+        <xs:complexType mixed="true">
+            <xs:attribute name="id" type="xs:normalizedString" />
+            <xs:attribute name="name" type="xs:normalizedString" />
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="part">
+    <xs:element name="image">
         <xs:complexType>
-            <xs:sequence>
-                <xs:element name="caption" minOccurs="0" maxOccurs="unbounded" type="xs:string" />
-                <xs:element ref="select" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
-            <xs:attribute name="id" type="xs:string" />
+            <xs:attribute name="id" type="xs:normalizedString" />
+            <xs:attribute name="file" type="xs:anyURI" use="required" />
+            <xs:attribute name="x" type="xs:decimal" />
+            <xs:attribute name="y" type="xs:decimal" />
+            <xs:attribute name="anim" type="xs:normalizedString" />
         </xs:complexType>
     </xs:element>
 
@@ -56,7 +57,7 @@
             <xs:sequence>
                 <xs:element ref="option" maxOccurs="unbounded" />
             </xs:sequence>
-            <xs:attribute name="id" type="xs:string" />
+            <xs:attribute name="id" type="xs:normalizedString" />
         </xs:complexType>
     </xs:element>
 
@@ -65,7 +66,27 @@
             <xs:sequence>
                 <xs:element name="script" type="xs:string" />
             </xs:sequence>
-            <xs:attribute name="id" type="xs:string" />
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="fade">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:normalizedString" />
+            <xs:attribute name="from" type="xs:decimal" />
+            <xs:attribute name="to" type="xs:decimal" />
+            <xs:attribute name="time" type="xs:decimal" />
+            <xs:attribute name="color" type="xs:normalizedString" />
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="html">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:normalizedString" />
+            <xs:attribute name="file" type="xs:anyURI" use="required" />
+            <xs:attribute name="x" type="xs:decimal" />
+            <xs:attribute name="y" type="xs:decimal" />
+            <xs:attribute name="width" type="xs:normalizedString" />
+            <xs:attribute name="height" type="xs:normalizedString" />
         </xs:complexType>
     </xs:element>
 
