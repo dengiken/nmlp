@@ -15,15 +15,20 @@ html, body {
     font-family: "regular",sans-serif;
     overflow: hidden;
 }
+
+iframe {
+    border: none;
+}
+
 .layer {
-     margin: 0;
-     padding: 0;
-     width: 100%;
-     height: 100%;
-     position: absolute;
-     left: 0;
-     top: 0;
- }
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
 
 #background {
      background-position: center;
@@ -45,6 +50,8 @@ html, body {
     transform: translate(-50%, -200px);
     padding: 1vw;
     border: 1px solid #ffffff;
+    border-radius: 15px;
+    box-sizing: border-box;
     background: #00000088;
     display: none;
     font-size: 5vw;
@@ -52,7 +59,7 @@ html, body {
 }
 @media (min-width: 600px) {
 #caption {
-     font-size: 30px;
+    font-size: 30px;
 }}
 
 #cap_next {
@@ -61,12 +68,12 @@ html, body {
     bottom: 10px;
     cursor: pointer;
     display: none;
+    pointer-events: auto !important;
 }
 
 #selection {
     width: 30%;
     min-width: 300px;
-    /*height: 300px;*/
     position: absolute;
     left: 50%;
     top: 50%;
@@ -77,6 +84,7 @@ html, body {
     display: none;
     font-size: 25px;
     color: #ffffff;
+    pointer-events: auto !important;
 }
 
 #selection .option {
@@ -86,6 +94,6 @@ html, body {
     background: #ffffff40;
 }
 
-#overlay {
+#overlay, #controls{
     pointer-events: none;
 }

@@ -6,3 +6,19 @@
  * @date    2021-01-19
  */
 
+$title = "";
+$book = preg_split("/&/", $_SERVER["QUERY_STRING"])[0];
+
+if ($book == "") {
+    exit();
+}
+
+$xmlFile = HOME_DIR . "/resources/{$book}/main.xml";
+
+if (!is_file($xmlFile)) {
+    exit();
+}
+
+$xml = simplexml_load_file($xmlFile);
+$title = $xml->xpath("/sequence/@title")[0]->title;
+

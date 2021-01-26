@@ -1,5 +1,14 @@
 const DEBUG = true;
 
+/**
+ * @class Nmlp
+ * @property book {string}
+ * @property scene {string}
+ * @property sceneData {node[]}
+ * @property cursor {string}
+ * @property xml {xml}
+ * @property client {client}
+ */
 class Nmlp {
     book = "";
     scene = "";
@@ -7,9 +16,10 @@ class Nmlp {
     cursor = 0;
     xml = "";
     client = new Client();
+    _get = "";
 
     constructor() {
-        let _get = location.search.substring(1).split("&").map(
+        this._get = location.search.substring(1).split("&").map(
             (p) => p.split("=")
         ).reduce(
             (obj, e) => (
@@ -17,7 +27,7 @@ class Nmlp {
             ),{}
         );
         this.book = location.search.substring(1).split("&")[0];
-        this.scene = _get["scn"] ? _get["scn"] : "";
+        this.scene = this._get["scn"] ? this._get["scn"] : "";
 
         this.startScene(this.book, this.scene);
     }
@@ -27,18 +37,24 @@ class Nmlp {
             type: "POST",
             url: "api.php",
             dataType: "xml",
-            data:{
+            data: {
                 book: book,
                 scene: scene,
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log(errorThrown);
             }
         }).done((data) => {
             //debug("readScene", data);
             this.xml = data;
             this.sceneData = xpath(data, "/scene/*");
-            this.main();
+            let tmp = JSON.parse(localStorage.nmlp);
+            if (tmp[this.book] && this._get["new"] != 1) {
+                this.client.move(tmp[this.book]);
+            } else {
+                this.client.autosave();
+                this.main();
+            }
         })
     }
 
@@ -51,12 +67,12 @@ class Nmlp {
                 break;
             case "image":
                 this.setImage($shot);
-                waiting = false;
-                this.cursor++;
+                break;
+            case "html":
+                this.setHtml($shot);
                 break;
             case "caption":
                 this.setCaption($shot);
-                this.cursor++;
                 break;
             case "select":
                 this.setSelect($shot);
@@ -69,13 +85,18 @@ class Nmlp {
             case "fade":
                 this.fade($shot);
                 break;
+            case "script":
+                this.runScript($shot);
+                break;
             default :
                 waiting = false;
                 this.cursor++;
         }
 
         if (!waiting) {
-            this.main();
+            setTimeout(() => {
+                this.main()
+            }, 100);
         }
     }
 
@@ -83,72 +104,108 @@ class Nmlp {
         let fileName = $obj.attr("file");
         if (fileName) {
             fileName = "nmlp-lib/resources/" + this.book + "/" + fileName;
-            this._setBg(fileName);
+            let img = new Image();
+            img.src = fileName;
+            img.onload = () => {
+                $("#background").css({
+                    backgroundImage: "url(" + fileName + ")"
+                });
+                this.cursor++;
+                this.main();
+            };
             return true;
         } else {
             return false;
         }
-    }
-
-    _setBg(fileName) {
-        let img = new Image();
-        img.src = fileName;
-        img.onload = () => {
-            $("#background").css({
-                backgroundImage: "url(" + fileName + ")"
-            });
-            this.cursor++;
-            this.main();
-        };
     }
 
     setImage($obj) {
         let x;
         let fileName = $obj.attr("file");
         if (fileName) {
-            let $img = $("<img src=\"" + "nmlp-lib/resources/" + this.book + "/" + fileName + "\">");
-            if ($obj.attr("x") != "") {
-                x = (parseFloat($obj.attr("x")) / 2) + "vw";
-            } else {
-                x = "0vw";
+            fileName = "nmlp-lib/resources/" + this.book + "/" + fileName;
+            let _img = new Image();
+            _img.src = fileName;
+            _img.onload = () => {
+                let $img = $("<img src=\"" + fileName + "\">");
+                if ($obj.attr("x") != "") {
+                    x = (parseFloat($obj.attr("x")) / 2) + "vw";
+                } else {
+                    x = "0vw";
+                }
+                //console.log(x);
+                $img.css({
+                    height: "100%",
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%) translate(" + x + ", 0)",
+                });
+                $("#foreground").append($img);
+                this.cursor++;
+                this.main();
             }
-            //console.log(x);
-            $img.css({
-                height: "100%",
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%) translate(" + x +", 0)",
-            });
-            $("#foreground").append($img);
             return true;
         } else {
             return false;
         }
     }
 
+    setHtml($obj) {
+        let fileName = $obj.attr("file");
+        if (fileName) {
+            if (!fileName.match(/^https?:\/\//)) {
+                fileName = "nmlp-lib/resources/" + this.book + "/" + fileName;
+            }
+            let $iframe = $("<iframe></iframe>");
+            let width = $obj.attr("width") ? $obj.attr("width") : "100%";
+            let height = $obj.attr("height") ? $obj.attr("height") : "100%";
+            let x = $obj.attr("x") ? (parseFloat($obj.attr("x")) / 2) + "vw" : "0vw";
+            let y = $obj.attr("y") ? (parseFloat($obj.attr("y")) / 2) + "vh" : "0vh";
+            $iframe.css({
+                display: "none",
+                width: width,
+                height: height,
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%) translate(" + x + ", " + y + ")",
+            });
+            $iframe.attr("src", fileName);
+            $iframe.on("load", () => {
+                $iframe.css("display", "block");
+                this.cursor++;
+                this.main();
+            });
+            $("#foreground").append($iframe);
+        }
+    }
+
     setCaption($obj) {
+        $("#cap_next").css("display", "none");
         $("#caption").css("display", "block");
         $("#cap_name").html($obj.attr("name"));
         let counter = 1;
-        let stepShow = setInterval(function(){
+        let stepShow = setInterval(() => {
             $("#cap_body").html($obj.text().slice(0, counter + 1));
             if (counter >= $obj.text().length) {
                 clearInterval(stepShow);
                 $("#cap_next").css("display", "block");
+                this.cursor++;
             }
             counter++;
         }, 25);
     }
 
     setSelect($obj) {
+        $("#selection").children().remove();
         $obj.children("option").each(function() {
             let $selection = $("<div class=\"option\">" + this.childNodes[0].nodeValue.trim() + "</div>");
             let $script = $(this).children("script");
             $selection.on("click", function(){
                 $("#selection").css("display", "none");
                 let nml = nmlp.client;
-                debug("script", $script.text());
+                //debug("script", $script.text());
                 eval($script.text());
             });
 
@@ -157,6 +214,11 @@ class Nmlp {
 
         $("#cap_next").css("display", "none");
         $("#selection").css("display", "block");
+    }
+
+    runScript($obj) {
+        let nml = nmlp.client;
+        eval($obj.text());
     }
 
     clearScreen() {
@@ -183,6 +245,10 @@ class Nmlp {
     }
 }
 
+/**
+ * @class Client
+ * @property {object}
+ */
 class Client {
     args = {};
     getVar(n) {
@@ -212,11 +278,19 @@ class Client {
             }
         }).done((data) => {
             //debug("readScene", data);
+            nmlp.scene = id;
             nmlp.xml = data;
             nmlp.sceneData = xpath(data, "/scene/*");
             nmlp.cursor = 0;
+            this.autosave();
             nmlp.main();
         })
+    }
+
+    autosave() {
+        let tmp = JSON.parse(localStorage.nmlp);
+        tmp[nmlp.book] = nmlp.scene;
+        localStorage.nmlp = JSON.stringify(tmp);
     }
 }
 
