@@ -48,15 +48,13 @@ class Nmlp {
             //debug("readScene", data);
             this.xml = data;
             this.sceneData = xpath(data, "/scene/*");
-            let tmp = localStorage.nmlp;
-            console.log(tmp);
-            if (tmp) {
+            let tmp = {};
+            if (this._get["continue"] && localStorage.nmlp) {
                 tmp = JSON.parse(localStorage.nmlp);
             } else {
                 localStorage.nmlp = "{}";
-                tmp = {};
             }
-            if (tmp[this.book] && this._get["new"] != 1) {
+            if (tmp[this.book] != "") {
                 this.client.move(tmp[this.book]);
             } else {
                 this.client.autosave();
@@ -191,7 +189,7 @@ class Nmlp {
     setCaption($obj) {
         $("#cap_next").css("display", "none");
         $("#caption").css("display", "block");
-        $("#cap_name").html($obj.attr("name"));
+        $("#cap_name").html($obj.attr("name") ? $obj.attr("name") : "");
         let counter = 1;
         let stepShow = setInterval(() => {
             $("#cap_body").html($obj.text().slice(0, counter + 1));
