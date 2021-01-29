@@ -151,3 +151,42 @@ scene要素以下に任意で配置出来ます。
 |height|任意　高さを指定します。
 #### 子要素
 不可（空要素タグ）
+
+## 3. nmlscript
+### 3.1. 基本文法
+ECMA Script 6 に準じます。
+
+WEBブラウザのDOMツリーを直接使用できますが、nmlクライアント以外のプロパティ、メソッドを操作することは保証外です。
+
+nmlクライアント用クラスを提供します。
+
+### 3.2. Clientクラス
+#### 3.2.1. プロパティ
+##### args プロパティ
+nml内で使用する変数を格納するプロパティ。
+
+Object型
+#### 3.2.2. メソッド
+##### getVar メソッド
+argsプロパティから値を取得するメソッド
+```
+Any Client::getVar(string name)
+```
+argsプロパティに格納されたname要素の値を返します。
+##### setVar メソッド
+argsプロパティに値を設定するメソッド
+```
+void Client::setVar(string name, Any value)
+```
+argsプロパティのname要素にvalue値を設定します。
+##### move メソッド
+nml内の任意のidに遷移します。
+```
+void Client::move(string id)
+```
+##### autosave メソッド
+nml.book, nml.scene, Client::args の値をWEBブラウザのlocalstorage.nmlpにJOSN形式で保存します。
+```
+void Client::autosave()
+```
+
