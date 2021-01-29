@@ -15,6 +15,36 @@ nmlp
 
 ### インストール ###
 
+#### FTP等 ####
+
+https://github.com/dengiken/nmlp/archive/master.zip
+
+から、ダウンロードして解凍します。
+
+nmlpを配置したいディレクトリに、src内のファイルとフォルダをアップロードしてください。
+
+#### コマンドライン ####
+
+```sh
+# 例
+git clone https://github.com/dengiken/nmlp.git
+mv nmlp/src /var/www/nmlp
+```
+nmlp-lib/resoureces 直下にサンプルがあります。
+
+### 実行方法 ###
+WEBブラウザで
+
+http(s)://www.example.com/nmlp/?example
+
+にアクセスするとexampleが開始します。
+
+また、
+
+http(s)://www.example.com/nmlp/?example&continue=1
+
+で前回の続き（シーン単位で自動保存）から開始します。
+
 ### 簡単なサンプル ###
 
 ```xml
