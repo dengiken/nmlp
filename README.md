@@ -9,6 +9,9 @@ nmlp
 
 ### Release ###
 
+nmlp(日本語）
+===========
+
 #### Novel Markup Language (NML) プロセッサ
 
 簡単な記述でノベルゲームを表現できるNML及び、それを解釈するNMLプロセッサのリファレンス実装です。
@@ -32,16 +35,16 @@ mv nmlp/src /var/www/nmlp
 ```
 nmlp-lib/resoureces 直下にサンプルがあります。
 
-### 実行方法 ###
+### 実行例 ###
 WEBブラウザで
 
-http(s)://www.example.com/nmlp/?example
+http(s)://{your host}/nmlp/?example
 
 にアクセスするとexampleが開始します。
 
 また、
 
-http(s)://www.example.com/nmlp/?example&continue=1
+http(s)://{your host}/nmlp/?example&continue=1
 
 で前回の続き（シーン単位で自動保存）から開始します。
 
