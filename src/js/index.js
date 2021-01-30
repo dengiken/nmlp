@@ -131,25 +131,39 @@ class Nmlp {
             fileName = "nmlp-lib/resources/" + this.book + "/" + fileName;
             let _img = new Image();
             _img.src = fileName;
+            let _anim;
+            if ($obj.attr("anim")) {
+                _anim = this.parseAnim($obj.attr("anim"));
+            }
             _img.onload = () => {
                 let $img = $("<img src=\"" + fileName + "\">");
-                if ($obj.attr("x") != "") {
-                    x = (parseFloat($obj.attr("x")) / 2) + "vw";
+                if (_anim) {
+                    switch (_anim.command) {
+                        case "slide":
+                            this.animSlide($img, _anim.args);
+                            //x = (_anim.args[2] / 2) + "vw";
+                            break;
+                        default:
+                    }
                 } else {
-                    x = "0vw";
+                    if ($obj.attr("x") != "") {
+                        x = (parseFloat($obj.attr("x")) / 2) + "vw";
+                    } else {
+                        x = "0vw";
+                    }
+                    $img.css({
+                        height: "100%",
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%) translate(" + x + ", 0)",
+                    });
+                    $("#foreground").append($img);
+                    this.cursor++;
+                    this.main();
                 }
                 //console.log(x);
-                $img.css({
-                    height: "100%",
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%) translate(" + x + ", 0)",
-                });
-                $("#foreground").append($img);
-                this.cursor++;
-                this.main();
-            }
+            };
             return true;
         } else {
             return false;
@@ -247,6 +261,61 @@ class Nmlp {
             }
             counter++;
         }, 50);
+    }
+
+    parseAnim(anim) {
+        let matches;
+        if(!(matches = anim.match(/^([^\(]+)\((.+)\)$/))) {
+            console.log("error");
+            return false;
+        }
+        let args = matches[2].split(",").map(arg => arg.trim());
+        let retval = {};
+        if (matches[1].trim()) {
+            retval= {
+                "command": matches[1].trim(),
+                "args": args.map(arg => parseInt(arg))
+            }
+        }
+        return retval;
+    }
+
+    animSlide($obj, args) {
+        let x, y, a, dx, dy, da, counter = 0;
+        let split = 10;
+        x = args[0] / 2;
+        y = args[1] / 2;
+        if (!isNaN(args[4]) && !isNaN(args[5])) {
+            a = args[4];
+            da = (args[5] - a) / split;
+        } else {
+            a = 100;
+            da = 0;
+        }
+        dx = ((args[2] / 2) - x) / split;
+        dy = ((args[3] / 2) - y) / split;
+        $obj.css({display: "none"});
+        $("#foreground").append($obj);
+        let fn = setInterval(() => {
+            $obj.css({
+                height: "100%",
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%) translate(" + (x) + "vw, " + (y) + "vh)",
+                display: "block",
+                opacity: a / 100,
+            });
+            x += dx;
+            y += dy;
+            a += da;
+            counter++;
+            if (counter >= split) {
+                clearInterval(fn);
+            }
+        }, 100);
+        console.log($obj);
+        console.log(args);
     }
 }
 
