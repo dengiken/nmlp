@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <sequence id="SEQ1" title="example" public="true">
-    <scene id="SCN1">
-        <caption>テスト1-1</caption>
-        <caption>テスト1-2</caption>
-        <script>
-            <![CDATA[
+<scene id="SCN1">
+    <caption>テスト1-1</caption>
+    <caption>テスト1-2</caption>
+    <script>
+        <![CDATA[
             nml.move("SCN2");
             ]]>
-        </script>
-    </scene>
-    <scene id="SCN2">
-        <caption>テスト2-1</caption>
-        <caption>テスト2-2</caption>
-    </scene>
+    </script>
+</scene>
+<scene id="SCN2">
+    <caption>テスト2-1</caption>
+    <caption>テスト2-2</caption>
+</scene>
 </sequence>
