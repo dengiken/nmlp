@@ -312,6 +312,8 @@ class Nmlp {
             counter++;
             if (counter >= split) {
                 clearInterval(fn);
+                this.cursor++;
+                this.main();
             }
         }, 100);
         console.log($obj);
