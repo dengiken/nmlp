@@ -13,7 +13,8 @@ if ($_POST["book"] == "") {
 if ($_POST["scene"] == "") {
     $xpath = "/sequence/scene[1]";
 } else {
-    $xpath = "/sequence/scene[@id='{$_POST["scene"]}']";
+    $scene = addslashes($_POST["scene"]);
+    $xpath = "/sequence/scene[@id='{$scene}']";
 }
 
 $book = preg_replace("/\.\.\//", "", $_POST["book"]);
