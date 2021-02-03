@@ -16,7 +16,8 @@ if ($_POST["scene"] == "") {
     $xpath = "/sequence/scene[@id='{$_POST["scene"]}']";
 }
 
-$xmlFile = HOME_DIR . "/resources/{$_POST["book"]}/main.xml";
+$book = preg_replace("/\.\.\//", "", $_POST["book"]);
+$xmlFile = HOME_DIR . "/resources/{$book}/main.xml";
 if (is_file($xmlFile)) {
     $xml = simplexml_load_file($xmlFile);
     //$result = $xml->xpath("/sequence/scene[1]/shot[1]");

@@ -7,7 +7,7 @@
  */
 
 $title = "";
-$book = preg_split("/&/", $_SERVER["QUERY_STRING"])[0];
+$book = preg_replace("/\.\.\//", "", preg_split("/&/", $_SERVER["QUERY_STRING"])[0]);
 
 if ($book == "") {
     exit();
