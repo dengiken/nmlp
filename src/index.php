@@ -23,6 +23,10 @@
     </div>
     <div id="overlay" class="layer"></div>
     <script type="text/javascript" src="apps/jquery.min.js"></script>
+    <script type="text/javascript">
+        let nmlp3;
+    </script>
+    <script type="module" src="js/3d.js"></script>
     <?php Common::loadJS() ?>
 </body>
 </html>

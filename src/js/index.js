@@ -73,6 +73,9 @@ class Nmlp {
             case "image":
                 this.setImage($shot);
                 break;
+            case "image3d":
+                this.setImage3d($shot);
+                break;
             case "html":
                 this.setHtml($shot);
                 break;
@@ -167,6 +170,13 @@ class Nmlp {
             return true;
         } else {
             return false;
+        }
+    }
+
+    setImage3d($obj) {
+        let fileName = $obj.attr("file");
+        if (fileName) {
+            nmlp3.load(fileName, this);
         }
     }
 
