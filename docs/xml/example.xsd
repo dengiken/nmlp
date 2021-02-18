@@ -20,6 +20,7 @@
                 <xs:element ref="background" />
                 <xs:element ref="caption" />
                 <xs:element ref="image" />
+                <xs:element ref="image3d" />
                 <xs:element ref="select" />
                 <xs:element name="clear" />
                 <xs:element ref="fade" />
@@ -51,6 +52,13 @@
             <xs:attribute name="x" type="xs:decimal" />
             <xs:attribute name="y" type="xs:decimal" />
             <xs:attribute name="anim" type="xs:normalizedString" />
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="image3d">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:normalizedString" />
+            <xs:attribute name="file" type="xs:anyURI" use="required" />
         </xs:complexType>
     </xs:element>
 
