@@ -94,6 +94,6 @@ iframe {
     background: #ffffff40;
 }
 
-#overlay, #controls{
+#overlay, #controls, #three {
     pointer-events: none;
 }
