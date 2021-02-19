@@ -404,8 +404,10 @@ const xpath = function(xml, xpath) {
 
 let nmlp = new Nmlp();
 
-$("#cap_next").on("click", function(e){
+$("#caption").on("click", function(e){
     //$("#caption").css("display", "none");
-    nmlp.main();
+    if ($("#cap_next").css("display") ==  "block") {
+        nmlp.main();
+    }
 });
 

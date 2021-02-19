@@ -56,10 +56,14 @@ iframe {
     display: none;
     font-size: 5vw;
     color: #ffffff;
+    cursor: pointer;
+    pointer-events: auto !important;
 }
 @media (min-width: 600px) {
 #caption {
     font-size: 30px;
+    cursor: pointer;
+    pointer-events: auto !important;
 }}
 
 #cap_next {
@@ -97,3 +101,4 @@ iframe {
 #overlay, #controls, #three {
     pointer-events: none;
 }
+
