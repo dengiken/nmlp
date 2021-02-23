@@ -23,6 +23,7 @@
     </div>
     <div id="overlay" class="layer"></div>
     <script type="text/javascript" src="apps/jquery.min.js"></script>
+    <script type="text/javascript" src="apps/ammo.wasm.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
     <script type="module" src="js/3d.js"></script>
     <?php Common::loadJS() ?>

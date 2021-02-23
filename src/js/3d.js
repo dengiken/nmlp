@@ -3,10 +3,14 @@ import * as THREE from '../apps/threejs/build/three.module.js';
 import { OrbitControls } from '../apps/threejs/modules/jsm/controls/OrbitControls.js';
 import { ARButton } from '../apps/threejs/modules/jsm/webxr/ARButton.js';
 import { GLTFLoader } from '../apps/threejs/modules/jsm/loaders/GLTFLoader.js';
+import { MMDLoader } from '../apps/threejs/modules/jsm/loaders/MMDLoader.js';
+import { MMDAnimationHelper  } from '../apps/threejs/modules/jsm/animation/MMDAnimationHelper.js';
 
 class Nmlp3
 {
     constructor() {
+        this.clock = new THREE.Clock();
+
         this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
         //this.camera.position.z = 180;
         //this.camera.position.y = 50;
@@ -36,6 +40,10 @@ class Nmlp3
         this.container = document.getElementById("three");
         this.container.appendChild(this.renderer.domElement);
 
+        this.helper = new MMDAnimationHelper({
+            afterglow: 2.0
+        });
+
         window.addEventListener("resize", () => {
             this.camera.aspect = window.innerWidth / window.innerHeight;
             this.camera.updateProjectionMatrix();
@@ -43,7 +51,7 @@ class Nmlp3
         });
     }
 
-    load(fileName, position, target) {
+    load(fileName, position, anim, target) {
         let loader, getMesh;
         console.log(fileName);
         switch (fileName.replace(/(.+)\.([^\.]+)/, '$2')) {
@@ -51,6 +59,12 @@ class Nmlp3
                 loader = new GLTFLoader();
                 getMesh = (mesh) => {
                     return mesh.scene;
+                };
+                break;
+            case "pmd":
+                loader = new MMDLoader();
+                getMesh = (mesh) => {
+                    return mesh;
                 };
                 break;
             default:
@@ -63,7 +77,32 @@ class Nmlp3
                 mesh.position.x = position[0];
                 mesh.position.y = position[1];
                 mesh.position.z = position[2];
-                this.scene.add(mesh);
+
+                if (anim) {
+                    loader.loadAnimation(
+                        anim,
+                        mesh,
+                        (vmd) => {
+                            console.log(vmd);
+                            this.helper.add(mesh, {animation:vmd,physics:false});
+                            this.scene.add(mesh);
+                            /*
+                            helper.setAnimation(mesh);
+                            loader.createAnimation(mesh, vmd);
+                            helper.unifyAnimationDuration({afterglow: 1.0});
+                            */
+                        },
+                        (xhr) => {
+                            console.log(xhr.loaded + " loaded(animation)");
+                        },
+                        (error) => {
+                            console.log(error);
+                        }
+                    );
+                } else {
+                    this.scene.add(mesh);
+                }
+
                 target.cursor++;
                 target.main()
             },
@@ -77,7 +116,10 @@ class Nmlp3
     }
 
     start() {
-        this.renderer.setAnimationLoop(() => {this.effect.render(this.scene, this.camera)});
+        this.renderer.setAnimationLoop(() => {
+            this.helper.update(this.clock.getDelta());
+            this.effect.render(this.scene, this.camera)
+        });
     }
 
     render(target) {

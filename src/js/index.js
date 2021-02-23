@@ -201,7 +201,10 @@ class Nmlp {
             let x = $obj.attr("x") ? parseFloat($obj.attr("x")) : 0;
             let y = $obj.attr("y") ? parseFloat($obj.attr("y")) : 0;
             let z = $obj.attr("z") ? parseFloat($obj.attr("z")) : 0;
-            nmlp3.load(fileName, [x, y, z], this);
+
+            let anim = $obj.attr("anim") ? $obj.attr("anim") : null;
+
+            nmlp3.load(fileName, [x, y, z], anim, this);
         }
     }
 
