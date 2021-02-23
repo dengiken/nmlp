@@ -177,9 +177,31 @@ class Nmlp {
     }
 
     setImage3d($obj) {
+        if ($obj.attr("cx")) {
+            nmlp3.camera.position.x = parseFloat($obj.attr("cx"));
+            nmlp3.controls.update();
+        }
+        if ($obj.attr("cy")) {
+            nmlp3.camera.position.x = parseFloat($obj.attr("cy"));
+            nmlp3.controls.update();
+        }
+        if ($obj.attr("cz")) {
+            nmlp3.camera.position.x = parseFloat($obj.attr("cz"));
+            nmlp3.controls.update();
+        }
+
+        if ($obj.attr("lookAt")) {
+            let lookAt = $obj.attr("lookAt").split(",").map(v => parseFloat(v));
+            nmlp3.camera.lookAt(lookAt[0], lookAt[1], lookAt[2]);
+            nmlp3.controls.update();
+        }
+
         let fileName = $obj.attr("file");
         if (fileName) {
-            nmlp3.load(fileName, this);
+            let x = $obj.attr("x") ? parseFloat($obj.attr("x")) : 0;
+            let y = $obj.attr("y") ? parseFloat($obj.attr("y")) : 0;
+            let z = $obj.attr("z") ? parseFloat($obj.attr("z")) : 0;
+            nmlp3.load(fileName, [x, y, z], this);
         }
     }
 

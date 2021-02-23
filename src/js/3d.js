@@ -8,8 +8,8 @@ class Nmlp3
 {
     constructor() {
         this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
-        this.camera.position.z = 180;
-        this.camera.position.y = 50;
+        //this.camera.position.z = 180;
+        //this.camera.position.y = 50;
 
         this.scene = new THREE.Scene();
 
@@ -35,9 +35,15 @@ class Nmlp3
 
         this.container = document.getElementById("three");
         this.container.appendChild(this.renderer.domElement);
+
+        window.addEventListener("resize", () => {
+            this.camera.aspect = window.innerWidth / window.innerHeight;
+            this.camera.updateProjectionMatrix();
+            this.effect.setSize(window.innerWidth, window.innerHeight);
+        });
     }
 
-    load(fileName, target) {
+    load(fileName, position, target) {
         let loader, getMesh;
         console.log(fileName);
         switch (fileName.replace(/(.+)\.([^\.]+)/, '$2')) {
@@ -54,7 +60,9 @@ class Nmlp3
             fileName,
             (mesh) => {
                 mesh = getMesh(mesh);
-                mesh.position.y = - 10;
+                mesh.position.x = position[0];
+                mesh.position.y = position[1];
+                mesh.position.z = position[2];
                 this.scene.add(mesh);
                 target.cursor++;
                 target.main()
