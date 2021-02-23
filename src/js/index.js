@@ -76,6 +76,9 @@ class Nmlp {
             case "image3d":
                 this.setImage3d($shot);
                 break;
+            case "bgm":
+                this.setBgm($shot);
+                break;
             case "html":
                 this.setHtml($shot);
                 break;
@@ -178,6 +181,19 @@ class Nmlp {
         if (fileName) {
             nmlp3.load(fileName, this);
         }
+    }
+
+    setBgm($obj) {
+        let fileName = $obj.attr("file");
+        if (fileName) {
+            fileName = "nmlp-lib/resources/" + this.book + "/" + fileName;
+            let $audio = $("<audio src=\"" + fileName + "\" autoplay>");
+            $("#background").append($audio);
+        } else if ($obj.attr("play") == "pause"){
+            $("#background audio")[0].pause();
+        }
+        this.cursor++;
+        this.main();
     }
 
     setHtml($obj) {
