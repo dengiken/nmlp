@@ -189,8 +189,8 @@ class Nmlp {
             fileName = "nmlp-lib/resources/" + this.book + "/" + fileName;
             let $audio = $("<audio src=\"" + fileName + "\" autoplay>");
             $("#background").append($audio);
-        } else if ($obj.attr("play") == "pause"){
-            $("#background audio")[0].pause();
+        } else if ($obj.attr("play") == "stop"){
+            $("#background audio").remove();
         }
         this.cursor++;
         this.main();
