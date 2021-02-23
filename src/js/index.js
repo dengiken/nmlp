@@ -182,17 +182,17 @@ class Nmlp {
             nmlp3.controls.update();
         }
         if ($obj.attr("cy")) {
-            nmlp3.camera.position.x = parseFloat($obj.attr("cy"));
+            nmlp3.camera.position.y = parseFloat($obj.attr("cy"));
             nmlp3.controls.update();
         }
         if ($obj.attr("cz")) {
-            nmlp3.camera.position.x = parseFloat($obj.attr("cz"));
+            nmlp3.camera.position.z = parseFloat($obj.attr("cz"));
             nmlp3.controls.update();
         }
 
         if ($obj.attr("lookAt")) {
             let lookAt = $obj.attr("lookAt").split(",").map(v => parseFloat(v));
-            nmlp3.camera.lookAt(lookAt[0], lookAt[1], lookAt[2]);
+            nmlp3.orbitTarget(lookAt[0], lookAt[1], lookAt[2]);
             nmlp3.controls.update();
         }
 

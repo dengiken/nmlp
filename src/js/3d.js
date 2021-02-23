@@ -84,6 +84,9 @@ class Nmlp3
         target.render(this.scene, this.camera);
     }
 
+    orbitTarget(x, y, z) {
+        this.controls.target = new THREE.Vector3(x, y, z);
+    }
 }
 
 nmlp3 = new Nmlp3();
