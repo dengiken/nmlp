@@ -11,8 +11,8 @@
 </head>
 <body>
     <div id="background" class="layer"></div>
-    <div id="foreground" class="layer"></div>
     <div id="three" class="layer"></div>
+    <div id="foreground" class="layer"></div>
     <div id="controls" class="layer">
         <div id="caption">
             <div id="cap_name"></div>
@@ -23,9 +23,7 @@
     </div>
     <div id="overlay" class="layer"></div>
     <script type="text/javascript" src="apps/jquery.min.js"></script>
-    <script type="text/javascript">
-        let nmlp3;
-    </script>
+    <script type="text/javascript" src="js/common.js"></script>
     <script type="module" src="js/3d.js"></script>
     <?php Common::loadJS() ?>
 </body>

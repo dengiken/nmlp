@@ -94,11 +94,14 @@ iframe {
 #selection .option {
     cursor: pointer;
 }
-#selection .option:hover {
+#selection .option.active {
     background: #ffffff40;
 }
 
-#overlay, #controls, #three {
+#overlay, #controls, #foreground {
     pointer-events: none;
 }
 
+#foreground iframe {
+    pointer-events: auto !important;
+}

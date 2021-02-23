@@ -241,6 +241,14 @@ class Nmlp {
             $("#selection").append($selection);
         });
 
+        activeSelection = 0;
+        $("#selection .option").eq(0).addClass("active");
+        $("#selection .option").on("mouseover", function(){
+            console.log("mouse");
+            $("#selection .option").removeClass("active");
+            $(this).addClass("active");
+        });
+
         $("#cap_next").css("display", "none");
         $("#selection").css("display", "block");
     }
