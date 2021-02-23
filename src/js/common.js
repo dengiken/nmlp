@@ -55,19 +55,23 @@ let gpInterval;
 
 const scanGp = () => {
     let count = 0;
+    let next = 50;
     let gps = navigator.getGamepads();
     for(let i in gamePads) {
         if (navigator.getGamepads()[i].buttons[0].value) {
+            next = 500;
             controlEnter();
         } else if (navigator.getGamepads()[i].buttons[12].value) {
+            next = 100;
             controlArrow(-1);
         } else if (navigator.getGamepads()[i].buttons[13].value) {
+            next = 100;
             controlArrow(1);
         }
         count++;
     }
-    if (!count) {
-        clearInterval(gpInterval);
+    if (count) {
+        setTimeout(scanGp, next);
     }
 };
 
@@ -83,7 +87,7 @@ const gh = (e, f) => {
 window.addEventListener("gamepadconnected", function(e){
     console.log("connected");
     gh(e,true);
-    gpInterval = setInterval(scanGp, 100);
+    gpInterval = setTimeout(scanGp, 50);
 }, false);
 
 window.addEventListener("gamepaddisconnected", function(e){
