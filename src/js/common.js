@@ -49,3 +49,44 @@ const controlArrow = (n) => {
     $target.addClass("active");
     //console.log($("#selection .active").next());
 };
+
+let gamePads = {};
+let gpInterval;
+
+const scanGp = () => {
+    let count = 0;
+    let gps = navigator.getGamepads();
+    for(let i in gamePads) {
+        if (navigator.getGamepads()[i].buttons[0].value) {
+            controlEnter();
+        } else if (navigator.getGamepads()[i].buttons[12].value) {
+            controlArrow(-1);
+        } else if (navigator.getGamepads()[i].buttons[13].value) {
+            controlArrow(1);
+        }
+        count++;
+    }
+    if (!count) {
+        clearInterval(gpInterval);
+    }
+};
+
+const gh = (e, f) => {
+    console.log(e.gamepad.index);
+    if (f) {
+        gamePads[e.gamepad.index] = e.gamepad;
+    } else {
+        delete gamePads[e.gamepad.index];
+    }
+};
+
+window.addEventListener("gamepadconnected", function(e){
+    console.log("connected");
+    gh(e,true);
+    gpInterval = setInterval(scanGp, 100);
+}, false);
+
+window.addEventListener("gamepaddisconnected", function(e){
+    console.log("disconnected");
+    gh(e, false);
+}, false);
