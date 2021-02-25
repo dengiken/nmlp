@@ -1,4 +1,6 @@
 import {Nmlp3} from "./3d.js";
+import {Nmls} from "./nmls.js";
+
 const DEBUG = true;
 
 /**
@@ -99,6 +101,9 @@ class Nmlp {
                 break;
             case "script":
                 this.runScript($shot);
+                break;
+            case "nmls":
+                this.runNmls($shot);
                 break;
             default :
                 waiting = false;
@@ -273,12 +278,25 @@ class Nmlp {
         $obj.children("option").each(function() {
             let $selection = $("<div class=\"option\">" + this.childNodes[0].nodeValue.trim() + "</div>");
             let $script = $(this).children("script");
-            $selection.on("click", function(){
-                $("#selection").css("display", "none");
-                let nml = nmlp.client;
-                //debug("script", $script.text());
-                eval($script.text());
-            });
+            if ($script) {
+                $selection.on("click", function () {
+                    $("#selection").css("display", "none");
+                    let nml = nmlp.client;
+                    //debug("script", $script.text());
+                    eval($script.text());
+                });
+            }
+            let $nmls = $(this).children("nmls");
+            if ($nmls) {
+                $selection.on("click", function () {
+                    $("#selection").css("display", "none");
+                    let result = nmls.run($obj.attr("code"));
+                    console.log(result);
+                    if (result) {
+                        nmlp.client.move(result);
+                    }
+                });
+            }
 
             $("#selection").append($selection);
         });
@@ -296,8 +314,17 @@ class Nmlp {
     }
 
     runScript($obj) {
-        let nml = nmlp.client;
+        let nml = this.client;
         eval($obj.text());
+    }
+
+    runNmls($obj) {
+        console.log("nmls");
+        let result = nmls.run($obj.attr("code"));
+        console.log(result);
+        if (result) {
+            this.client.move(result);
+        }
     }
 
     clearScreen() {
@@ -453,6 +480,8 @@ const xpath = function(xml, xpath) {
 };
 
 nmlp = new Nmlp();
+
+let nmls = new Nmls();
 
 $("#caption").on("click", function(e){
     //$("#caption").css("display", "none");
