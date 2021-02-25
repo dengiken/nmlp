@@ -5,6 +5,7 @@ import { ARButton } from '../apps/threejs/modules/jsm/webxr/ARButton.js';
 import { GLTFLoader } from '../apps/threejs/modules/jsm/loaders/GLTFLoader.js';
 import { MMDLoader } from '../apps/threejs/modules/jsm/loaders/MMDLoader.js';
 import { MMDAnimationHelper  } from '../apps/threejs/modules/jsm/animation/MMDAnimationHelper.js';
+import { VRM } from '../apps/threejs/modules/jsm/libs/three-vrm.module.js';
 
 export class Nmlp3
 {
@@ -34,7 +35,7 @@ export class Nmlp3
         this.scene.add( this.directionalLight );
 
         this.controls = new OrbitControls(this.camera, this.renderer.domElement );
-        this.controls.minDistance = 10;
+        this.controls.minDistance = 1;
         this.controls.maxDistance = 1000;
 
         this.container = document.getElementById("three");
@@ -57,19 +58,95 @@ export class Nmlp3
         switch (fileName.replace(/(.+)\.([^\.]+)/, '$2')) {
             case "gltf":
                 loader = new GLTFLoader();
-                getMesh = (mesh) => {
-                    return mesh.scene;
-                };
+                loader.load(
+                    fileName,
+                    (gltf) => {
+                        let mesh = gltf.scene;
+                        mesh.position.x = position[0];
+                        mesh.position.y = position[1];
+                        mesh.position.z = position[2];
+                        this.scene.add(mesh);
+                        target.cursor++;
+                        target.main()
+                    },
+                    (xhr) => {
+                        console.log(xhr.loaded + " loaded");
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
                 break;
             case "pmd":
                 loader = new MMDLoader();
-                getMesh = (mesh) => {
-                    return mesh;
-                };
+                loader.load(
+                    fileName,
+                    (mesh) => {
+                        mesh.position.x = position[0];
+                        mesh.position.y = position[1];
+                        mesh.position.z = position[2];
+
+                        if (anim) {
+                            loader.loadAnimation(
+                                anim,
+                                mesh,
+                                (vmd) => {
+                                    console.log(vmd);
+                                    this.helper.add(mesh, {animation:vmd,physics:false});
+                                    this.scene.add(mesh);
+                                    target.cursor++;
+                                    target.main();
+                                },
+                                (xhr) => {
+                                    console.log(xhr.loaded + " loaded(animation)");
+                                },
+                                (error) => {
+                                    console.log(error);
+                                }
+                            );
+                        } else {
+                            this.scene.add(mesh);
+                            target.cursor++;
+                            target.main();
+                        }
+                    },
+                    (xhr) => {
+                        console.log(xhr.loaded + " loaded");
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
+                break;
+            case "vrm":
+                loader = new GLTFLoader();
+                loader.load(
+                    fileName,
+                    (mesh) => {
+                        VRM.from(mesh).then((vrm) => {
+                            console.log("vrm");
+                            mesh = vrm.scene;
+                            mesh.position.x = position[0];
+                            mesh.position.y = position[1];
+                            mesh.position.z = position[2];
+
+                            this.scene.add(mesh);
+                            target.cursor++;
+                            target.main()
+                        });
+                    },
+                    (xhr) => {
+                        console.log(xhr.loaded + " loaded");
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
                 break;
             default:
         }
 
+        /*
         loader.load(
             fileName,
             (mesh) => {
@@ -86,11 +163,6 @@ export class Nmlp3
                             console.log(vmd);
                             this.helper.add(mesh, {animation:vmd,physics:false});
                             this.scene.add(mesh);
-                            /*
-                            helper.setAnimation(mesh);
-                            loader.createAnimation(mesh, vmd);
-                            helper.unifyAnimationDuration({afterglow: 1.0});
-                            */
                         },
                         (xhr) => {
                             console.log(xhr.loaded + " loaded(animation)");
@@ -113,6 +185,7 @@ export class Nmlp3
                 console.log(error);
             }
         );
+        */
     }
 
     start() {
