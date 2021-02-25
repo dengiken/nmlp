@@ -1,3 +1,4 @@
+import {Nmlp3} from "./3d.js";
 const DEBUG = true;
 
 /**
@@ -451,7 +452,7 @@ const xpath = function(xml, xpath) {
     return result;
 };
 
-let nmlp = new Nmlp();
+nmlp = new Nmlp();
 
 $("#caption").on("click", function(e){
     //$("#caption").css("display", "none");

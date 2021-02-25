@@ -6,7 +6,7 @@ import { GLTFLoader } from '../apps/threejs/modules/jsm/loaders/GLTFLoader.js';
 import { MMDLoader } from '../apps/threejs/modules/jsm/loaders/MMDLoader.js';
 import { MMDAnimationHelper  } from '../apps/threejs/modules/jsm/animation/MMDAnimationHelper.js';
 
-class Nmlp3
+export class Nmlp3
 {
     constructor() {
         this.clock = new THREE.Clock();

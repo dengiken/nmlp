@@ -1,5 +1,3 @@
-let nmlp3;
-
 let activeSelection;
 
 $("html").on("keyup", function(e){
