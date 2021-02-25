@@ -290,7 +290,7 @@ class Nmlp {
             if ($nmls) {
                 $selection.on("click", function () {
                     $("#selection").css("display", "none");
-                    let result = nmls.run($obj.attr("code"));
+                    let result = nmls.run($nmls.attr("code"));
                     console.log(result);
                     if (result) {
                         nmlp.client.move(result);
