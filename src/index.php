@@ -22,6 +22,15 @@
         <div id="selection"></div>
     </div>
     <div id="overlay" class="layer"></div>
+    <div id="config" class="layer">
+        <div id="configSensor">
+            <div id="configPanel">
+                <button>操作方法・設定</button>
+                <button>音量設定</button>
+                <button>セーブ・ロード</button>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript">
         let nmlp, nmlp3;
     </script>

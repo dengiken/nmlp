@@ -102,10 +102,25 @@ iframe {
     background: #ffffff40;
 }
 
-#overlay, #controls, #foreground {
+#overlay, #controls, #foreground, #config {
     pointer-events: none;
 }
 
 #foreground iframe {
     pointer-events: auto !important;
+}
+
+#configSensor {
+    width: 100%;
+    height: 10%;
+    cursor: pointer;
+    pointer-events: auto !important;
+}
+
+#configPanel {
+    background: #333333;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: -100px;
 }

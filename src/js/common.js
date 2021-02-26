@@ -17,6 +17,15 @@ $("html").on("keyup", function(e){
     return false;
 });
 
+$("#configSensor").on("click", () => {
+     openConfig();
+});
+
+$("#configPanel").on("click", () => {
+    closeConfig();
+});
+
+
 const controlEnter = () => {
     if ($("#cap_next").css("display") == "block") {
         $("#cap_next").click();
@@ -46,6 +55,15 @@ const controlArrow = (n) => {
     $("#selection .option").removeClass("active");
     $target.addClass("active");
     //console.log($("#selection .active").next());
+};
+
+const openConfig = () => {
+    console.log("openConfig");
+    $("#configPanel").animate({top: 0});
+};
+
+const closeConfig = () => {
+    $("#configPanel").animate({top: "-100px"});
 };
 
 let gamePads = {};
