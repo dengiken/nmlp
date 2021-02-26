@@ -13,8 +13,6 @@ export class Nmlp3
         this.clock = new THREE.Clock();
 
         this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
-        //this.camera.position.z = 180;
-        //this.camera.position.y = 50;
 
         this.scene = new THREE.Scene();
 
@@ -53,7 +51,7 @@ export class Nmlp3
     }
 
     load(fileName, position, anim, target) {
-        let loader, getMesh;
+        let loader;
         console.log(fileName);
         switch (fileName.replace(/(.+)\.([^\.]+)/, '$2')) {
             case "gltf":
@@ -146,46 +144,6 @@ export class Nmlp3
             default:
         }
 
-        /*
-        loader.load(
-            fileName,
-            (mesh) => {
-                mesh = getMesh(mesh);
-                mesh.position.x = position[0];
-                mesh.position.y = position[1];
-                mesh.position.z = position[2];
-
-                if (anim) {
-                    loader.loadAnimation(
-                        anim,
-                        mesh,
-                        (vmd) => {
-                            console.log(vmd);
-                            this.helper.add(mesh, {animation:vmd,physics:false});
-                            this.scene.add(mesh);
-                        },
-                        (xhr) => {
-                            console.log(xhr.loaded + " loaded(animation)");
-                        },
-                        (error) => {
-                            console.log(error);
-                        }
-                    );
-                } else {
-                    this.scene.add(mesh);
-                }
-
-                target.cursor++;
-                target.main()
-            },
-            (xhr) => {
-                console.log(xhr.loaded + " loaded");
-            },
-            (error) => {
-                console.log(error);
-            }
-        );
-        */
     }
 
     start() {
