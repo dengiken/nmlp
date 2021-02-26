@@ -75,6 +75,10 @@ iframe {
     pointer-events: auto !important;
 }
 
+.cap_char {
+    display: none;
+}
+
 #selection {
     width: 30%;
     min-width: 300px;

@@ -261,10 +261,22 @@ class Nmlp {
         $("#cap_next").css("display", "none");
         $("#caption").css("display", "block");
         $("#cap_name").html($obj.attr("name") ? $obj.attr("name") : "");
-        let counter = 1;
+        $("#cap_body").html("");
+        $("#cap_body").append(("<span>" + $obj.html() + "</span>").replace(/>([^<]+)/g, (a) => {
+            let ret = "";
+            for(let i in a) {
+                if (a[i] == ">") {
+                    ret += ">";
+                } else {
+                    ret += "<span class=\"cap_char\">" + a[i] + "</span>";
+                }
+            }
+            return ret;
+        }));
+        let counter = 0;
         let stepShow = setInterval(() => {
-            $("#cap_body").html($obj.text().slice(0, counter + 1));
-            if (counter >= $obj.text().length) {
+            $(".cap_char").eq(counter).css("display", "inline");
+            if (counter > $("#cap_body .cap_char").length) {
                 clearInterval(stepShow);
                 $("#cap_next").css("display", "block");
                 this.cursor++;
