@@ -1,31 +1,40 @@
+import {Userconf} from "./userconf.js";
 let activeSelection;
 
+let userconf = new Userconf();
+
+// キー検出
 $("html").on("keyup", function(e){
-    switch (e.key) {
-        case "Enter":
-            controlEnter();
-            break;
-        case "ArrowUp":
-            controlArrow(-1);
-            break;
-        case "ArrowDown":
-            controlArrow(1);
-            break;
-        default:
-            return true;
+    if (!configWait) {
+        switch (e.key) {
+            case "Enter":
+                controlEnter();
+                break;
+            case "ArrowUp":
+                controlArrow(-1);
+                break;
+            case "ArrowDown":
+                controlArrow(1);
+                break;
+            default:
+                return true;
+        }
+        return false;
+    } else {
+        userconf.actionWait(e);
     }
-    return false;
 });
 
+// 設定パネル用出し入れ用
 $("#configSensor").on("click", () => {
-     openConfig();
+     if ($("#configPanel").css("top") == "0px") {
+         $("#configPanel").animate({top: "-100px"});
+     } else {
+         $("#configPanel").animate({top: "0px"});
+     }
 });
 
-$("#configPanel").on("click", () => {
-    closeConfig();
-});
-
-
+// Enterキーを押された
 const controlEnter = () => {
     if ($("#cap_next").css("display") == "block") {
         $("#cap_next").click();
@@ -34,6 +43,7 @@ const controlEnter = () => {
     }
 };
 
+// ↓もしくは↑キーを押された
 const controlArrow = (n) => {
     let $target;
     if ($("#selection").css("display") == "none") {
@@ -57,15 +67,19 @@ const controlArrow = (n) => {
     //console.log($("#selection .active").next());
 };
 
-const openConfig = () => {
-    console.log("openConfig");
-    $("#configPanel").animate({top: 0});
-};
+// 設定画面を閉じるボタン
+$("#closeConfigButton").on("click", () => {
+    $("#configBody").css("display", "none");
+    $("#cap_next").css("display", "block");
+});
 
-const closeConfig = () => {
-    $("#configPanel").animate({top: "-100px"});
-};
+// 設定画面を開くボタン
+$("#openConfigButton").on("click", () => {
+    $("#configBody").css("display", "block");
+    $("#cap_next").css("display", "none");
+});
 
+// GamaPad 関連設定
 let gamePads = {};
 let gpInterval;
 
@@ -74,13 +88,13 @@ const scanGp = () => {
     let next = 50;
     let gps = navigator.getGamepads();
     for(let i in gamePads) {
-        if (navigator.getGamepads()[i].buttons[0].value) {
+        if (navigator.getGamepads()[i].buttons[0].value) {　// B0
             next = 500;
             controlEnter();
-        } else if (navigator.getGamepads()[i].buttons[12].value) {
+        } else if (navigator.getGamepads()[i].buttons[12].value) { // ↑
             next = 100;
             controlArrow(-1);
-        } else if (navigator.getGamepads()[i].buttons[13].value) {
+        } else if (navigator.getGamepads()[i].buttons[13].value) { // ↓
             next = 100;
             controlArrow(1);
         }
