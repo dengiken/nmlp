@@ -42,18 +42,18 @@
                 <tbody>
                 <tr>
                     <td>進む・決定</td>
-                    <td class="keyConfig keyborad" data-button="kOk">Enter</td>
-                    <td class="keyConfig padButton" data-button="pOk">a</td>
+                    <td class="keyConfig keyborad" data-button="kOk"></td>
+                    <td class="keyConfig padButton" data-button="pOk"></td>
                 </tr>
                 <tr>
                     <td>上を選択</td>
-                    <td class="keyConfig keyborad" data-button="kUp">↑</td>
-                    <td class="keyConfig padButton" data-button="mUp">W</td>
+                    <td class="keyConfig keyborad" data-button="kUp"></td>
+                    <td class="keyConfig padButton" data-button="pUp"></td>
                 </tr>
                 <tr>
                     <td>下を選択</td>
-                    <td class="keyConfig keyborad" data-button="kDn">↓</td>
-                    <td class="keyConfig padButton" data-button="mDn">X</td>
+                    <td class="keyConfig keyborad" data-button="kDn"></td>
+                    <td class="keyConfig padButton" data-button="pDn"></td>
                 </tr>
                 </tbody>
             </table>
@@ -71,7 +71,7 @@
         </div>
     </div>
     <script type="text/javascript">
-        let nmlp, nmlp3, configWait;
+        let nmlp, nmlp3, userconf, configWait = "";
     </script>
     <script type="text/javascript" src="apps/jquery.min.js"></script>
     <script type="text/javascript" src="apps/ammo.wasm.js"></script>

@@ -1,19 +1,19 @@
 import {Userconf} from "./userconf.js";
-let activeSelection;
+//let activeSelection;
 
-let userconf = new Userconf();
+userconf = new Userconf();
 
 // キー検出
 $("html").on("keyup", function(e){
-    if (!configWait) {
+    if (!configWait.match(/^k/)) {
         switch (e.key) {
-            case "Enter":
+            case userconf.commandMap["kOk"]:
                 controlEnter();
                 break;
-            case "ArrowUp":
+            case userconf.commandMap["kUp"]:
                 controlArrow(-1);
                 break;
-            case "ArrowDown":
+            case userconf.commandMap["kDn"]:
                 controlArrow(1);
                 break;
             default:
@@ -77,6 +77,9 @@ $("#closeConfigButton").on("click", () => {
 $("#openConfigButton").on("click", () => {
     $("#configBody").css("display", "block");
     $("#cap_next").css("display", "none");
+    for (let i in userconf.commandMap) {
+        userconf.setIcon($("[data-button=" + i + "]"), userconf.commandMap[i]);
+    }
 });
 
 // GamaPad 関連設定
@@ -86,22 +89,39 @@ let gpInterval;
 const scanGp = () => {
     let count = 0;
     let next = 50;
-    let gps = navigator.getGamepads();
-    for(let i in gamePads) {
-        if (navigator.getGamepads()[i].buttons[0].value) {　// B0
-            next = 500;
-            controlEnter();
-        } else if (navigator.getGamepads()[i].buttons[12].value) { // ↑
-            next = 100;
-            controlArrow(-1);
-        } else if (navigator.getGamepads()[i].buttons[13].value) { // ↓
-            next = 100;
-            controlArrow(1);
+    //let gps = navigator.getGamepads();
+    if (!configWait.match(/^p/)) {
+        for (let i in gamePads) {
+            if (navigator.getGamepads()[i].buttons[
+                userconf.commandMap["pOk"]
+                ].value) {　// B0
+                next = 500;
+                controlEnter();
+            } else if (navigator.getGamepads()[i].buttons[
+                userconf.commandMap["pUp"]
+                ].value) { // ↑
+                next = 100;
+                controlArrow(-1);
+            } else if (navigator.getGamepads()[i].buttons[
+                userconf.commandMap["pDn"]
+                ].value) { // ↓
+                next = 100;
+                controlArrow(1);
+            }
+            count++;
         }
-        count++;
-    }
-    if (count) {
-        setTimeout(scanGp, next);
+        if (count) {
+            setTimeout(scanGp, next);
+        }
+    } else {
+        for (let i in gamePads) {
+            for (let j in navigator.getGamepads()[i].buttons) {
+                if (navigator.getGamepads()[i].buttons[j].value) {
+                    userconf.actionWaitPad(j);
+                }
+            }
+        }
+        setTimeout(scanGp, 100);
     }
 };
 
