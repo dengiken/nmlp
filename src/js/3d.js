@@ -1,7 +1,7 @@
 // UNDER CONSTRUCTION
 import * as THREE from '../apps/threejs/build/three.module.js';
 import { OrbitControls } from '../apps/threejs/modules/jsm/controls/OrbitControls.js';
-import { ARButton } from '../apps/threejs/modules/jsm/webxr/ARButton.js';
+import { VRButton } from '../apps/threejs/modules/jsm/webxr/VRButton.js';
 import { GLTFLoader } from '../apps/threejs/modules/jsm/loaders/GLTFLoader.js';
 import { MMDLoader } from '../apps/threejs/modules/jsm/loaders/MMDLoader.js';
 import { MMDAnimationHelper  } from '../apps/threejs/modules/jsm/animation/MMDAnimationHelper.js';
@@ -16,6 +16,10 @@ export class Nmlp3
 
         this.scene = new THREE.Scene();
 
+        this.cameraContainer = new THREE.Object3D();
+        this.cameraContainer.add(this.camera);
+        this.scene.add(this.cameraContainer);
+
         this.renderer = new THREE.WebGLRenderer({
             antialias: true,
             alpha: true
@@ -23,7 +27,9 @@ export class Nmlp3
         //this.renderer.setClearColor(0x000000, 0);
         this.renderer.setPixelRatio( window.devicePixelRatio );
         this.renderer.setSize( window.innerWidth, window.innerHeight );
-        //this.renderer.xr.enabled = true;
+
+        this.renderer.xr.enabled = true;
+        this.renderer.xr.setReferenceSpaceType("local");
 
         //this.effect = new OutlineEffect( renderer );
         this.effect = this.renderer;
@@ -38,6 +44,8 @@ export class Nmlp3
 
         this.container = document.getElementById("three");
         this.container.appendChild(this.renderer.domElement);
+
+        document.body.appendChild( VRButton.createButton( this.renderer ) );
 
         this.helper = new MMDAnimationHelper({
             afterglow: 2.0

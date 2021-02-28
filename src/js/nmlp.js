@@ -184,15 +184,18 @@ class Nmlp {
 
     setImage3d($obj) {
         if ($obj.attr("cx")) {
-            nmlp3.camera.position.x = parseFloat($obj.attr("cx"));
+            nmlp3.cameraContainer.position.x = parseFloat($obj.attr("cx"));
+            //nmlp3.cameraContainer.position.x = nmlp3.camera.position.x;
             nmlp3.controls.update();
         }
         if ($obj.attr("cy")) {
-            nmlp3.camera.position.y = parseFloat($obj.attr("cy"));
+            nmlp3.cameraContainer.position.y = parseFloat($obj.attr("cy"));
+            //nmlp3.cameraContainer.position.y = nmlp3.camera.position.y;
             nmlp3.controls.update();
         }
         if ($obj.attr("cz")) {
-            nmlp3.camera.position.z = parseFloat($obj.attr("cz"));
+            nmlp3.cameraContainer.position.z = parseFloat($obj.attr("cz"));
+            //nmlp3.cameraContainer.position.z = nmlp3.camera.position.z;
             nmlp3.controls.update();
         }
 
