@@ -1,7 +1,9 @@
-import {Nmlp3} from "./3d.js";
+import {Nmlp3} from "./nmlp3.js";
 import {Nmls} from "./nmls.js";
+import {Client} from "./nmlpClient.js";
 
 const DEBUG = true;
+let nmlp3 = new Nmlp3();
 
 /**
  * @class Nmlp
@@ -12,13 +14,13 @@ const DEBUG = true;
  * @property xml {xml}
  * @property client {client}
  */
-class Nmlp {
+export class Nmlp {
     book = "";
     scene = "";
     sceneData = "";
     cursor = 0;
     xml = "";
-    client = new Client();
+    client = new Client(this);
     _get = "";
 
     constructor() {
@@ -316,7 +318,6 @@ class Nmlp {
             $("#selection").append($selection);
         });
 
-        activeSelection = 0;
         $("#selection .option").eq(0).addClass("active");
         $("#selection .option").on("mouseover", function(){
             console.log("mouse");
@@ -423,55 +424,6 @@ class Nmlp {
     }
 }
 
-/**
- * @class Client
- * @property {object}
- */
-class Client {
-    args = {};
-    getVar(n) {
-        return this.args[n];
-    }
-    setVar(n, v) {
-        this.args[n] = v;
-    }
-    move(id) {
-        for(let i in nmlp.sceneData) {
-            if ($(nmlp.sceneData[i]).attr("id") == id) {
-                nmlp.cursor = i;
-                nmlp.main();
-                return true;
-            }
-        }
-        $.ajax({
-            type: "POST",
-            url: "api.php",
-            dataType: "xml",
-            data:{
-                book: nmlp.book,
-                scene: id,
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log(errorThrown);
-            }
-        }).done((data) => {
-            //debug("readScene", data);
-            nmlp.scene = id;
-            nmlp.xml = data;
-            nmlp.sceneData = xpath(data, "/scene/*");
-            nmlp.cursor = 0;
-            this.autosave();
-            nmlp.main();
-        })
-    }
-
-    autosave() {
-        let tmp = JSON.parse(localStorage.nmlp);
-        tmp[nmlp.book] = nmlp.scene;
-        localStorage.nmlp = JSON.stringify(tmp);
-    }
-}
-
 const debug = function(obj1, obj2) {
     if (DEBUG) {
         console.log(obj1);
@@ -494,14 +446,5 @@ const xpath = function(xml, xpath) {
     return result;
 };
 
-nmlp = new Nmlp();
-
 let nmls = new Nmls();
-
-$("#caption").on("click", function(e){
-    //$("#caption").css("display", "none");
-    if ($("#cap_next").css("display") ==  "block") {
-        nmlp.main();
-    }
-});
 

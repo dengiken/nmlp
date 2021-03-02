@@ -56,6 +56,8 @@ export class Nmlp3
             this.camera.updateProjectionMatrix();
             this.effect.setSize(window.innerWidth, window.innerHeight);
         });
+
+        this.start();
     }
 
     load(fileName, position, anim, target) {
@@ -170,5 +172,3 @@ export class Nmlp3
     }
 }
 
-nmlp3 = new Nmlp3();
-nmlp3.start();

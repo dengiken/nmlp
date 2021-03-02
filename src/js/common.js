@@ -1,7 +1,8 @@
 import {Userconf} from "./userconf.js";
-//let activeSelection;
+import {Nmlp} from "./nmlp.js";
 
-userconf = new Userconf();
+let userconf = new Userconf();
+let nmlp = new Nmlp();
 
 // キー検出
 $("html").on("keyup", function(e){
@@ -144,3 +145,10 @@ window.addEventListener("gamepaddisconnected", function(e){
     console.log("disconnected");
     gh(e, false);
 }, false);
+
+$("#caption").on("click", function(e){
+    //$("#caption").css("display", "none");
+    if ($("#cap_next").css("display") ==  "block") {
+        nmlp.main();
+    }
+});
