@@ -1,4 +1,3 @@
-// UNDER CONSTRUCTION
 import * as THREE from '../apps/threejs/build/three.module.js';
 import { OrbitControls } from '../apps/threejs/modules/jsm/controls/OrbitControls.js';
 import { VRButton } from '../apps/threejs/modules/jsm/webxr/VRButton.js';

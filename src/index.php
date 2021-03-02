@@ -71,12 +71,11 @@
         </div>
     </div>
     <script type="text/javascript">
-        //let nmlp, nmlp3, userconf, configWait = "";
     </script>
     <script type="text/javascript" src="apps/jquery.min.js"></script>
+    <script type="text/javascript" src="js/global.js"></script>
     <script type="text/javascript" src="apps/ammo.wasm.js"></script>
     <script type="module" src="js/common.js"></script>
-    <!--<script type="module" src="js/nmlp.js"></script>-->
     <?php Common::loadJS() ?>
 </body>
 </html>

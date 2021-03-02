@@ -2,7 +2,6 @@ import {Nmlp3} from "./nmlp3.js";
 import {Nmls} from "./nmls.js";
 import {Client} from "./nmlpClient.js";
 
-const DEBUG = true;
 let nmlp3 = new Nmlp3();
 
 /**
@@ -292,25 +291,26 @@ export class Nmlp {
 
     setSelect($obj) {
         $("#selection").children().remove();
-        $obj.children("option").each(function() {
-            let $selection = $("<div class=\"option\">" + this.childNodes[0].nodeValue.trim() + "</div>");
-            let $script = $(this).children("script");
+        $obj.children("option").each(i => {
+            let node = $obj.children("option")[i];
+            let $selection = $("<div class=\"option\">" + node.childNodes[0].nodeValue.trim() + "</div>");
+            let $script = $(node).children("script");
             if ($script) {
                 $selection.on("click", function () {
                     $("#selection").css("display", "none");
-                    let nml = nmlp.client;
+                    let nml = this.client;
                     //debug("script", $script.text());
                     eval($script.text());
                 });
             }
-            let $nmls = $(this).children("nmls");
+            let $nmls = $(node).children("nmls");
             if ($nmls) {
-                $selection.on("click", function () {
+                $selection.on("click", () => {
                     $("#selection").css("display", "none");
                     let result = nmls.run($nmls.attr("code"));
                     console.log(result);
                     if (result) {
-                        nmlp.client.move(result);
+                        this.client.move(result);
                     }
                 });
             }
@@ -424,27 +424,6 @@ export class Nmlp {
     }
 }
 
-const debug = function(obj1, obj2) {
-    if (DEBUG) {
-        console.log(obj1);
-        console.log(obj2);
-    }
-};
-
-const xpath = function(xml, xpath) {
-    let result = [];
-    let values = xml.evaluate(
-        xpath,
-        xml,
-        null,
-        XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
-        null
-    );
-    for (let i = 0; i < values.snapshotLength; i++) {
-        result.push(values.snapshotItem(i));
-    }
-    return result;
-};
 
 let nmls = new Nmls();
 
