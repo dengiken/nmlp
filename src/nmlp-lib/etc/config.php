@@ -53,6 +53,13 @@ define("LIB_DIR", HOME_DIR . "/lib");
 define("EXEC_DIR", HOME_DIR . "/libexec");
 
 /**
+ * @def     INCLUDE_DIR
+ * @brief   html用includeファイル
+ */
+define("INCLUDE_DIR", HOME_DIR . "/includes");
+
+
+/**
  * @def     TMP_DIR
  * @brief   テンポラリディレクトリ
  */
