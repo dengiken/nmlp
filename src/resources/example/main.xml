@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<sequence id="SEQ1">
+<sequence id="SEQ1" title="v0.2-alpha">
     <scene id="SCN1">
         <item file="images/bg1.png" fullscreen="true" />
         <item file="images/bg2.png" />

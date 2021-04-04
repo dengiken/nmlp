@@ -4,8 +4,6 @@ import {Nmlp} from "./nmlp.js";
 let userconf = new Userconf();
 let nmlp = new Nmlp();
 
-let configWait;
-
 // キー検出
 $("html").on("keyup", function(e){
     if (!configWait.match(/^k/)) {

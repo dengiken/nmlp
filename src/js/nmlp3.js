@@ -27,8 +27,8 @@ export class Nmlp3
         this.renderer.setPixelRatio( window.devicePixelRatio );
         this.renderer.setSize( window.innerWidth, window.innerHeight );
 
-        this.renderer.xr.enabled = true;
-        this.renderer.xr.setReferenceSpaceType("local");
+        //this.renderer.xr.enabled = true;
+        //this.renderer.xr.setReferenceSpaceType("local");
 
         //this.effect = new OutlineEffect( renderer );
         this.effect = this.renderer;
@@ -44,7 +44,7 @@ export class Nmlp3
         this.container = document.getElementById("three");
         this.container.appendChild(this.renderer.domElement);
 
-        document.body.appendChild( VRButton.createButton( this.renderer ) );
+        //document.body.appendChild( VRButton.createButton( this.renderer ) );
 
         this.helper = new MMDAnimationHelper({
             afterglow: 2.0

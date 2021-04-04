@@ -23,13 +23,14 @@
     </div>
     <div id="overlay" class="layer"></div>
     <div id="config" class="layer">
-        <?php include_once(INCLUDE_DIR . "/configPanel"); ?>
+        <?php include_once(INCLUDE_DIR . "/configPanel.php"); ?>
     </div>
     <script type="text/javascript">
+        let configWait = "";
     </script>
     <script type="text/javascript" src="apps/jquery.min.js"></script>
     <script type="text/javascript" src="js/global.js"></script>
-    <script type="text/javascript" src="apps/ammo.wasm.js"></script>
+    <!--<script type="text/javascript" src="apps/ammo.wasm.js"></script>-->
     <script type="module" src="js/common.js"></script>
     <?php Common::loadJS() ?>
 </body>
