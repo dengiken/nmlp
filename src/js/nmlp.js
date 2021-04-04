@@ -121,7 +121,7 @@ export class Nmlp {
     setBackground($obj) {
         let fileName = $obj.attr("file");
         if (fileName) {
-            fileName = "nmlp-lib/resources/" + this.book + "/" + fileName;
+            fileName = "resources/" + this.book + "/" + fileName;
             let img = new Image();
             img.src = fileName;
             img.onload = () => {
@@ -141,7 +141,7 @@ export class Nmlp {
         let x;
         let fileName = $obj.attr("file");
         if (fileName) {
-            fileName = "nmlp-lib/resources/" + this.book + "/" + fileName;
+            fileName = "resources/" + this.book + "/" + fileName;
             let _img = new Image();
             _img.src = fileName;
             let _anim;
@@ -221,7 +221,7 @@ export class Nmlp {
     setBgm($obj) {
         let fileName = $obj.attr("file");
         if (fileName) {
-            fileName = "nmlp-lib/resources/" + this.book + "/" + fileName;
+            fileName = "resources/" + this.book + "/" + fileName;
             let $audio = $("<audio src=\"" + fileName + "\" autoplay>");
             $("#background").append($audio);
         } else if ($obj.attr("play") == "stop"){
@@ -235,7 +235,7 @@ export class Nmlp {
         let fileName = $obj.attr("file");
         if (fileName) {
             if (!fileName.match(/^https?:\/\//)) {
-                fileName = "nmlp-lib/resources/" + this.book + "/" + fileName;
+                fileName = "resources/" + this.book + "/" + fileName;
             }
             let $iframe = $("<iframe></iframe>");
             let width = $obj.attr("width") ? $obj.attr("width") : "100%";

@@ -13,7 +13,7 @@ if ($book == "") {
     exit();
 }
 
-$xmlFile = HOME_DIR . "/resources/{$book}/main.xml";
+$xmlFile = "resources/{$book}/main.xml";
 
 if (!is_file($xmlFile)) {
     exit();
